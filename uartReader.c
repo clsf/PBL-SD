@@ -46,7 +46,7 @@ int main(){
 	char address;
 	char binaryCommand[9];
 	char binarySensorInfo[9];
-	int reading = 1
+	int reading = 1;
 	struct termios options; /* Serial ports setting */
 	// Informando a porta, que é de leitura e escrita, sem delay
 	fd = open("/dev/ttyS0", O_RDONLY);
