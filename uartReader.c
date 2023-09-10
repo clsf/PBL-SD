@@ -46,6 +46,7 @@ int main(){
 	char address;
 	char binaryCommand[9];
 	char binarySensorInfo[9];
+	int reading = 1
 	struct termios options; /* Serial ports setting */
 	// Informando a porta, que é de leitura e escrita, sem delay
 	fd = open("/dev/ttyS0", O_RDONLY);
@@ -73,7 +74,7 @@ int main(){
 	//Aplica as configurações
 	tcsetattr(fd, TCSANOW, &options);
     
-	while(true){
+	while(reading){
 		/** ######### TRECHO PARA LEITURA ######### */
 		///**
 		//printf("O computador esperará 5 segundos para envio dos dados...\n");
