@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-//#include <unistd.h>
-//#include <fcntl.h>
-//#include <termios.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <termios.h>
 
 void printMenuSensor(){
     printf("\n==== SENSORES ====\n");
@@ -26,7 +26,7 @@ int main (){
     int sensor;
     int comando;
     int continuar = 1;
-    char bytes[2];
+    char bytes[16];
     struct termios options;
     int fd, len;
 
@@ -67,7 +67,7 @@ int main (){
 
                     len = strlen(bytes);
                     len = write(fd, bytes, len);
-                    printf("Bytes enviados:  %d \n", len1);
+                    printf("Bytes enviados:  %d \n", len);
                     sleep(1);
 
                 }else{
