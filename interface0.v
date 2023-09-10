@@ -10,8 +10,7 @@ algum erro ele retorna uma resposta equivalente (Um byte)
 module interface0(
 	input i_Clock,
 	input i_En,
-	input [7:0] i_request, // Byte de requisição do dado
-	input [1:0] continuos,
+	input [7:0] i_request, // Byte de requisição do dados
 	inout	dht_data_int, // Entrada e saída do sensor DHT11
 	output [7:0] o_data_int, // Saida do dado da interface
 	output o_done_i1, // Bit para informar se o processo foi terminado

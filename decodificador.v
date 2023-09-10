@@ -40,6 +40,7 @@ reg reg_start_transmitter = 1'b0;//bit responsável ligar a transmissão dos dad
 assign data_transmitter = reg_data_transmitter; 
 assign reg_endereco = endereco;
 assign start_transmitter = reg_start_transmitter;
+assign d_done = reg_d_done;
 
 localparam idle =  2'b00, 
 			  decoding  =  2'b01, 
@@ -61,10 +62,9 @@ always @(posedge clk) begin
 		case(state)
 			idle: 
 					begin
-						reg_d_done = 1'b0; 
-						reg_data_transmitter = 24'b000000000000000000000000;
-						reg_start_transmitter = 1'b0;
 						if(En == 1'b1)begin 
+							reg_d_done = 1'b0; 
+							reg_data_transmitter = 24'b000000000000000000000000;
 								state <= decoding;
 							end
 			
@@ -127,6 +127,7 @@ always @(posedge clk) begin
 						end
 				sending: //Estado para aguardar o final da transmissão de dados pelo transmitter
 					begin
+					reg_start_transmitter = 1'b0;
 							if(data_transmitted == 1'b1)begin 
 								reg_d_done = 1'b1; //Confirma a transmissão de dados
 								state <= idle;
