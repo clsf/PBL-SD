@@ -83,13 +83,13 @@ int main(){
 		// Read from serial port 
 		memset(text, 0, numBytes);
 		len = read(fd, text, numBytes);
-		printf("===================\n");
-		printf("Recebi %d bytes\n", len);
-		printf("Recebi as strings: %s\n", text);
+		//printf("===================\n");
+		//printf("Recebi %d bytes\n", len);
+		//printf("Recebi as strings: %s\n", text);
 
 		// Converte os valores convertidos em ascii pela uart para binario
 		decimalToBinary(text[1], binaryCommand);
-    	decimalToBinary(text[2], binarySensorInfo);
+		decimalToBinary(text[2], binarySensorInfo);
 		// Converte a variavel dos dados em binario para int
 		command = binaryToDecimal(binaryCommand);
 		sensorInfo = binaryToDecimal(binarySensorInfo);
@@ -98,22 +98,26 @@ int main(){
 
 		// Saídas baseadas no comando recebido
 		switch(command){
-			case 0:
-				printf("Código %d: Sensor %c com problema\n", command, address);
 			case 1:
-				printf("Código %d: Sensor %c funcionando normalmente\n", command, address);
+				printf("Código %d: Sensor %c com problema\n", command, address);
+				break;
 			case 2:
-				printf("Código %d: Medida de umidade do sensor %c: %d\n", command, address, sensorInfo); 
+				printf("Código %d: Sensor %c funcionando normalmente\n", command, address);
+				break;
 			case 3:
-				printf("Código %d: Medida de temperatura do sensor %c: %d\n", command, address, sensorInfo); 
+				printf("Código %d: Medida de umidade do sensor %c: %d\n", command, address, sensorInfo);
+				break; 
 			case 4:
-				printf("Código %d: Desativado monitoramento continuo de temperatura do sensor: %c\n", command, address); 
+				printf("Código %d: Medida de temperatura do sensor %c: %d\n", command, address, sensorInfo);
+				break; 
 			case 5:
-				printf("Código %d: Desativado monitoramento continuo de umidade do sensor: %c\n", command, address); 
-			default:
-				printf("Comando inválido: Checar fonte dos dados\n");
+				printf("Código %d: Desativado monitoramento continuo de temperatura do sensor: %c\n", command, address);
+				break; 
+			case 6:
+				printf("Código %d: Desativado monitoramento continuo de umidade do sensor: %c\n", command, address);
+				break; 
 		}
-
+		
 		/** ######### FIM TRECHO PARA LEITURA ######### */
 	}
 
