@@ -1,35 +1,10 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <math.h>
 #include <termios.h>
-
-
-// Funcao que converte de binario para decimal
-int binaryToDecimal(unsigned char *binary) {
-    int decimal = 0;
-    int length = strlen(binary);
-
-    for (int i = 0; i < length; i++) {
-        if (binary[i] == '1') {
-            decimal += 1 << (length - 1 - i);
-        }
-    }
-
-    return decimal;
-}
-
-// Funcao que converte de decimal para binario
-void decimalToBinary(char decimalChar, char binary[9]) {
-    int decimal = decimalChar - '0'; // Converte o caractere decimal em um inteiro
-
-    for (int i = 7; i >= 0; i--) {
-        binary[i] = (decimal % 2) + '0'; // Converte o bit para '0' ou '1'
-        decimal /= 2;
-    }
-
-    binary[8] = '\0'; // Adiciona o caractere nulo para formar uma string
-}
 
 // Funcao pra teste de validade do binario
 void printBinary(unsigned char byte) {
@@ -41,11 +16,8 @@ void printBinary(unsigned char byte) {
 int main(){
     int numBytes = 3;
 	int fd, len;
-	int command, sensorInfo;
+	int command, sensorInfo, address;
 	char text[numBytes];// só salvo dois bytes(char) por vez
-	char address;
-	char binaryCommand[9];
-	char binarySensorInfo[9];
 	int reading = 1;
 	struct termios options; /* Serial ports setting */
 	// Informando a porta, que é de leitura e escrita, sem delay
@@ -83,19 +55,28 @@ int main(){
 		// Read from serial port 
 		memset(text, 0, numBytes);
 		len = read(fd, text, numBytes);
-		//printf("===================\n");
-		//printf("Recebi %d bytes\n", len);
-		//printf("Recebi as strings: %s\n", text);
 
-		// Converte os valores convertidos em ascii pela uart para binario
-		decimalToBinary(text[1], binaryCommand);
-		decimalToBinary(text[2], binarySensorInfo);
-		// Converte a variavel dos dados em binario para int
-		command = binaryToDecimal(binaryCommand);
-		sensorInfo = binaryToDecimal(binarySensorInfo);
-		// Pega o valor de endereco de text
-		address = text[0];
-
+		if (len > 0) {
+			printf("===================\n");
+			printf("Recebi %d bytes\n", len);
+			printf("Recebi as strings: %s\n", text);
+			printf("\nValor:\n");
+			printBinary(text[0]);
+			printf("\nComando:\n");
+			printBinary(text[1]);
+			printf("\nSensor:\n");
+			printBinary(text[2]);
+			printf("\n");
+		}
+		
+		sensorInfo = text[0];
+		command = text[1];
+		address = text[2];
+		
+		if (len > 0) {
+			printf("Comando: %d\nValor: %d\nSensor: %c\n", command, sensorInfo, address);
+		}
+			
 		// Saídas baseadas no comando recebido
 		switch(command){
 			case 1:
@@ -105,19 +86,19 @@ int main(){
 				printf("Código %d: Sensor %c funcionando normalmente\n", command, address);
 				break;
 			case 3:
-				printf("Código %d: Medida de umidade do sensor %c: %d\n", command, address, sensorInfo);
-				break; 
+				printf("Código %d: Medida de umidade do sensor %c: %d\n", command, address, sensorInfo); 
+				break;
 			case 4:
-				printf("Código %d: Medida de temperatura do sensor %c: %d\n", command, address, sensorInfo);
-				break; 
+				printf("Código %d: Medida de temperatura do sensor %c: %d\n", command, address, sensorInfo); 
+				break;
 			case 5:
-				printf("Código %d: Desativado monitoramento continuo de temperatura do sensor: %c\n", command, address);
-				break; 
+				printf("Código %d: Desativado monitoramento continuo de temperatura do sensor: %c\n", command, address); 
+				break;
 			case 6:
-				printf("Código %d: Desativado monitoramento continuo de umidade do sensor: %c\n", command, address);
-				break; 
-		}
-		
+				printf("Código %d: Desativado monitoramento continuo de umidade do sensor: %c\n", command, address); 
+				break;
+		}	
+
 		/** ######### FIM TRECHO PARA LEITURA ######### */
 	}
 
