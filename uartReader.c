@@ -80,22 +80,22 @@ int main(){
 		// Saídas baseadas no comando recebido
 		switch(command){
 			case 1:
-				printf("Código %d: Sensor %c com problema\n", command, address);
+				printf("Código %d: Sensor %d com problema\n", command, address);
 				break;
 			case 2:
-				printf("Código %d: Sensor %c funcionando normalmente\n", command, address);
+				printf("Código %d: Sensor %d funcionando normalmente\n", command, address);
 				break;
 			case 3:
-				printf("Código %d: Medida de umidade do sensor %c: %d\n", command, address, sensorInfo); 
+				printf("Código %d: Medida de umidade do sensor %d: %d\n", command, address, sensorInfo); 
 				break;
 			case 4:
-				printf("Código %d: Medida de temperatura do sensor %c: %d\n", command, address, sensorInfo); 
+				printf("Código %d: Medida de temperatura do sensor %d: %d\n", command, address, sensorInfo); 
 				break;
 			case 5:
-				printf("Código %d: Desativado monitoramento continuo de temperatura do sensor: %c\n", command, address); 
+				printf("Código %d: Desativado monitoramento continuo de temperatura do sensor: %d\n", command, address); 
 				break;
 			case 6:
-				printf("Código %d: Desativado monitoramento continuo de umidade do sensor: %c\n", command, address); 
+				printf("Código %d: Desativado monitoramento continuo de umidade do sensor: %d\n", command, address); 
 				break;
 		}	
 
