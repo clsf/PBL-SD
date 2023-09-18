@@ -6,33 +6,6 @@
 #include <math.h>
 #include <termios.h>
 
-
-// Funcao que converte de binario para decimal
-int binaryToDecimal(unsigned char *binary) {
-    int decimal = 0;
-    int length = strlen(binary);
-
-    for (int i = 0; i < length; i++) {
-        if (binary[i] == '1') {
-            decimal += 1 << (length - 1 - i);
-        }
-    }
-
-    return decimal;
-}
-
-// Funcao que converte de decimal para binario
-void decimalToBinary(char decimalChar, char binary[9]) {
-    int decimal = decimalChar - '0'; // Converte o caractere decimal em um inteiro
-
-    for (int i = 7; i >= 0; i--) {
-        binary[i] = (decimal % 2) + '0'; // Converte o bit para '0' ou '1'
-        decimal /= 2;
-    }
-
-    binary[8] = '\0'; // Adiciona o caractere nulo para formar uma string
-}
-
 // Funcao pra teste de validade do binario
 void printBinary(unsigned char byte) {
     for (int i = 7; i >= 0; i--) {
@@ -42,18 +15,10 @@ void printBinary(unsigned char byte) {
 
 int main(){
 	const int numSensor = 8;
-    int numBytes = 3;
+    	int numBytes = 3;
 	int fd, len;
-	int temperature[numSensor];
-    int humidity[numSensor];
-	int command[numSensor];
-	int sensorTemp, commandTemp;
 	char text[numBytes];// só salvo dois bytes(char) por vez
 	int reading = 1;
-
-	memset(humidity, 0, sizeof humidity);
-	memset(temperature, 0, sizeof temperature);
-	memset(command, 0, sizeof command);
 
 	struct termios options; /* Serial ports setting */
 	// Informando a porta, que é de leitura e escrita, sem delay
@@ -86,7 +51,6 @@ int main(){
 		/** ######### TRECHO PARA LEITURA ######### */
 		///**
 		//printf("O computador esperará 5 segundos para envio dos dados...\n");
-		sleep(1);
 
 		// Read from serial port 
 		memset(text, 0, numBytes);
@@ -105,38 +69,19 @@ int main(){
 			printf("\n");
 		}
 		*/
-		sensorTemp = text[2]; // temporario
-		commandTemp = text[1]; // temporario
-		if(commandTemp == 3){
-			humidity[sensorTemp] = text[0];
-			command[sensorTemp] = commandTemp;
-		}
-		else if(commandTemp == 4){
-			temperature[sensorTemp] = text[0];
-			command[sensorTemp] = commandTemp;
-		}
-		else if(commandTemp == 5){
-			temperature[sensorTemp] = 0;
-			command[sensorTemp] = commandTemp;
-		}
-		else if(commandTemp == 6){
-			humidity[sensorTemp] = 0;
-			command[sensorTemp] = commandTemp;
-		}
-		else{
-			command[sensorTemp] = commandTemp;
-		}
+		
+		
 		
 		//if (len > 0) {
 			//printf("Comando: %d\nValor: %d\nSensor: %c\n", text[1], text[0], text[2]);
 		//}
-		
+		/*
 		printf("Sensor\tCodigo\tTemperatura (C)\tUmidade (%%)\n");
 		for (int sensor = 1; sensor <= 8; sensor++) {
-    		printf("%d\t%d\t\t%d\t  %d\n", sensor, command[sensor], temperature[sensor], humidity[sensor]);
-    	}
+    			printf("%d\t%d\t\t%d\t  %d\n", sensor, command[sensor], temperature[sensor], humidity[sensor]);
+    		}
+		*/
 		
-		/*
 		// Saídas baseadas no comando recebido
 		switch(text[1]){
 			case 1:
@@ -159,9 +104,6 @@ int main(){
 				break;
 		}
 		
-		*/
-		printf("\033[H\033[J");
-		sleep(1);
 		/** ######### FIM TRECHO PARA LEITURA ######### */
 	}
 
