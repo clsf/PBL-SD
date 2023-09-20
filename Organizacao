@@ -1,0 +1,38 @@
+Introdução - Contextualização do projeto (Nirvan)
+Equipe de desenvolvimento (Cláudia)
+Tutor (Cláudia)
+Sumário (Cláudia)
+- Recursos utilizados
+- Como executar
+- Exemplo de montagem 
+- UART
+- DHT
+- Gerenciamento e processamento da informação
+ - Conclusões
+ - Anexos  
+ 
+Recursos utilizados (Nirvan)
+
+Como executar
+- Em c (Nirvan)
+- FPGA (Cláudia)
+
+Exemplo de montagem
+
+UART
+- Escrita e Leitura em c (Nirvan)
+- Receiver e Transmitter (Luis)
+- Baud Rate (Luis)
+DHT 
+ - Fundamentação teórica e módulo (Cláudia)
+
+Gerenciamento e processamento da informação
+- Interface (Nicassio)
+- Escalonador (Luis)
+- Decodificador (Nicassio)
+
+Conclusões  ? 
+
+Anexos ?
+
+
